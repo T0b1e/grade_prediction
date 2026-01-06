@@ -151,9 +151,6 @@ async function scrapeGrades(
 
     await rightFrame.waitForSelector("#grdShowYear", { timeout: 30000 });
 
-    // Capture browser console logs and send to UI
-    page.on("console", (msg) => logCallback(`[Browser] ${msg.text()}`));
-
     // Extract Data
     logCallback("[Scraper] กำลังดึงข้อมูลเกรด..."); // Extracting Data
 
@@ -168,22 +165,13 @@ async function scrapeGrades(
       throw new Error("Could not find right frame for extraction");
 
     const grades = await latestRightFrame.evaluate(() => {
-      console.log("Starting extraction...");
       const results = [];
       // Find all semester headers via the Term Label
       const termLabels = Array.from(
         document.querySelectorAll('span[id*="_lblTerm"]')
       );
 
-      console.log(`Found ${termLabels.length} term labels.`);
-
       if (termLabels.length === 0) {
-        // Debug: what IS in the body?
-        console.log("Body length:", document.body.innerHTML.length);
-        console.log(
-          "First 500 chars:",
-          document.body.innerText.substring(0, 500)
-        );
         return {
           error: "No term labels found. Elements found: " + termLabels.length,
         };
@@ -195,8 +183,6 @@ async function scrapeGrades(
         // Navigate up to find the semester container table
         const semesterTableHeaderRow = termLbl.closest("tr");
         const semesterTable = semesterTableHeaderRow.closest("table");
-
-        console.log("Processing term:", termLbl.innerText);
 
         // Get Semester Info
         const term = termLbl.innerText.trim();
@@ -223,7 +209,6 @@ async function scrapeGrades(
         blockObj.courses = [];
         if (gradeTable) {
           const rows = Array.from(gradeTable.querySelectorAll("tr"));
-          console.log(`  Found grade table with ${rows.length} rows.`);
           // Skip header row (index 0)
           for (let i = 1; i < rows.length; i++) {
             const cells = rows[i].querySelectorAll("td");
@@ -236,14 +221,11 @@ async function scrapeGrades(
               });
             }
           }
-        } else {
-          console.log("  No grade table found for this term.");
         }
 
         results.push(blockObj);
       });
 
-      console.log("Extraction complete. Results count:", results.length);
       return results;
     });
 
