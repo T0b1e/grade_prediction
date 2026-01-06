@@ -1,5 +1,9 @@
 FROM ghcr.io/puppeteer/puppeteer:latest
 
+# Skip local Chromium download as the image already has it
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
 # Switch to root to install dependencies/copy files
 USER root
 

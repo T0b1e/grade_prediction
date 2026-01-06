@@ -10,7 +10,7 @@ async function scrapeGrades(
 
   // Using configuration that matches the working scrape_grade.js
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: "new", // Must be headless in Docker
     defaultViewport: null,
     args: ["--no-sandbox", "--disable-setuid-sandbox", "--start-maximized"],
   });
@@ -256,7 +256,7 @@ async function scrapeGrades(
     logCallback(`[Scraper Error] เกิดข้อผิดพลาด: ${error.message}`);
     throw error;
   } finally {
-    // await browser.close();
+    await browser.close();
   }
 }
 
