@@ -49,7 +49,7 @@ const server = http.createServer(async (req, res) => {
         });
 
         const logCallback = (msg) => {
-          console.log(msg); // Keep server log
+          // console.log(msg); // Removed server log as requested
           res.write(JSON.stringify({ type: "log", message: msg }) + "\n");
         };
 
