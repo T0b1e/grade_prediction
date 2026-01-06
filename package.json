@@ -1,0 +1,17 @@
+{
+  "name": "enroll-assistance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.15.0",
+    "selenium-webdriver": "^4.22.0",
+    "webdriver-manager": "^12.1.9",
+    "x-ray": "^2.3.4"
+  }
+}

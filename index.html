@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSU Grade Prediction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header style="position: relative;">
+            <h1>ระบบคำนวณเกรดเฉลี่ย RSU</h1>
+            <p>คำนวณและคาดการณ์เกรดเฉลี่ยสะสม (GPAX) จากข้อมูลปัจจุบันของคุณ</p>
+            <button id="btn-reset" class="btn-clear hidden"
+                style="position: absolute; top: 0; right: 0; background: none; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 6px; cursor: pointer; color: #64748b; font-size: 0.8rem;">
+                ออก / ล้างข้อมูล
+            </button>
+        </header>
+
+        <!-- Login Section -->
+        <section id="login-section">
+            <div class="login-card">
+                <h2>เข้าสู่ระบบ RSU Intranet</h2>
+                <div class="input-group">
+                    <label for="username">รหัสนักศึกษา</label>
+                    <input type="text" id="username" placeholder="เช่น u6505065" value="u6505065">
+                </div>
+                <div class="input-group">
+                    <label for="password">รหัสผ่าน</label>
+                    <input type="password" id="password" placeholder="กรอกรหัสผ่าน">
+                </div>
+                <button id="btn-go" class="btn-primary">ดึงข้อมูลเกรด</button>
+                <div id="error-message" class="error-box hidden"></div>
+
+                <!-- Progress Log Section -->
+                <div id="loading-container" class="hidden"
+                    style="margin-top: 20px; text-align: left; background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 0.9em; color: #475569;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 600;">
+                        <div class="spinner"></div>
+                        <span>กำลังดำเนินการ...</span>
+                    </div>
+                    <div id="process-log"
+                        style="font-family: monospace; max-height: 100px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+                        <!-- Logs will appear here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <main id="main-content" class="hidden">
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>เกรดเฉลี่ยสะสม (GPAX)</h3>
+                    <div class="value" id="current-gpax">0.00</div>
+                    <div class="sub">หน่วยกิตรวม: <span id="current-credits">0</span></div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table id="grade-table">
+                    <thead>
+                        <tr>
+                            <th class="col-no">ลำดับ</th>
+                            <th class="col-subject">วิชา</th>
+                            <th class="col-credit">หน่วยกิต</th>
+                            <th class="col-grade">เกรด</th>
+                            <th class="col-term">ภาคเรียน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bottom-summary">
+                <div class="card prediction">
+                    <h3>เกรดเฉลี่ยที่คาดการณ์ (Predicted)</h3>
+                    <div class="value" id="predicted-gpax">0.00</div>
+                    <div class="sub">หน่วยกิตรวม (คาดการณ์): <span id="predicted-credits">0</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Data and Logic -->
+    <!-- <script src="data.js"></script> -->
+    <script src="app.js"></script>
+</body>
+
+</html>
